@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 const createTransporter = () => {
   // For development, we'll use Gmail SMTP
   // In production, you should use a proper email service like SendGrid, AWS SES, etc.
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER, // Your Gmail address
