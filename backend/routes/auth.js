@@ -12,7 +12,10 @@ const {
   resendOTP, 
   login, 
   getMe, 
-  becomeOwner 
+  becomeOwner,
+  forgotPassword,
+  verifyPasswordResetOTP,
+  resetPassword
 } = require('../controllers/authController');
 
 // @route   POST /api/auth/send-otp
@@ -44,5 +47,20 @@ router.get('/me', auth, getMe);
 // @desc    Change user role to owner
 // @access  Private
 router.post('/become-owner', auth, becomeOwner);
+
+// @route   POST /api/auth/forgot-password
+// @desc    Send password reset OTP
+// @access  Public
+router.post('/forgot-password', forgotPassword);
+
+// @route   POST /api/auth/verify-password-reset-otp
+// @desc    Verify password reset OTP
+// @access  Public
+router.post('/verify-password-reset-otp', verifyPasswordResetOTP);
+
+// @route   POST /api/auth/reset-password
+// @desc    Reset password with OTP
+// @access  Public
+router.post('/reset-password', resetPassword);
 
 module.exports = router; 

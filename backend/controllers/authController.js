@@ -1,7 +1,13 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const OTP = require('../models/OTP');
-const { generateOTP, sendOTPEmail, sendWelcomeEmail } = require('../utils/emailService');
+const { 
+  generateOTP, 
+  sendOTPEmail, 
+  sendWelcomeEmail,
+  sendPasswordResetOTPEmail,
+  sendPasswordResetConfirmationEmail
+} = require('../utils/emailService');
 
 // Generate JWT Token
 const generateToken = (userId) => {
@@ -32,7 +38,8 @@ const sendOTP = async (req, res) => {
     // Save OTP to database
     const otpRecord = new OTP({
       email,
-      otp
+      otp,
+      purpose: 'registration'
     });
     await otpRecord.save();
 
@@ -77,10 +84,11 @@ const verifyOTP = async (req, res) => {
   try {
     const { email, otp, tempData } = req.body;
 
-    // Find the OTP record
+    // Find the OTP record for registration
     const otpRecord = await OTP.findOne({ 
       email, 
       otp, 
+      purpose: 'registration',
       isUsed: false,
       expiresAt: { $gt: new Date() }
     });
@@ -181,7 +189,8 @@ const resendOTP = async (req, res) => {
     // Save new OTP to database
     const otpRecord = new OTP({
       email,
-      otp
+      otp,
+      purpose: 'registration'
     });
     await otpRecord.save();
 
@@ -298,6 +307,158 @@ const getMe = async (req, res) => {
   }
 };
 
+// @desc    Send forgot password OTP
+// @route   POST /api/auth/forgot-password
+// @access  Public
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User with this email does not exist'
+      });
+    }
+
+    // Generate OTP
+    const otp = generateOTP();
+
+    // Save OTP to database (with purpose for password reset)
+    const otpRecord = new OTP({
+      email,
+      otp,
+      purpose: 'password-reset'
+    });
+    await otpRecord.save();
+
+    // Send OTP email
+    const emailSent = await sendPasswordResetOTPEmail(email, otp, user.name);
+    
+    if (!emailSent) {
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to send OTP email'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset OTP sent successfully to your email'
+    });
+
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to send password reset OTP',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+};
+
+// @desc    Verify password reset OTP
+// @route   POST /api/auth/verify-otp
+// @access  Public
+const verifyPasswordResetOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Find the OTP record for password reset
+    const otpRecord = await OTP.findOne({ 
+      email, 
+      otp, 
+      purpose: 'password-reset',
+      isUsed: false,
+      expiresAt: { $gt: new Date() }
+    });
+
+    if (!otpRecord) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired OTP'
+      });
+    }
+
+    // Mark OTP as used
+    otpRecord.isUsed = true;
+    await otpRecord.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'OTP verified successfully. You can now reset your password.'
+    });
+
+  } catch (error) {
+    console.error('Verify password reset OTP error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to verify OTP',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+};
+
+// @desc    Reset password
+// @route   POST /api/auth/reset-password
+// @access  Public
+const resetPassword = async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+
+    // Verify OTP again for security
+    const otpRecord = await OTP.findOne({ 
+      email, 
+      otp, 
+      purpose: 'password-reset',
+      isUsed: false,
+      expiresAt: { $gt: new Date() }
+    });
+
+    if (!otpRecord) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired OTP'
+      });
+    }
+
+    // Find user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Update password
+    user.password = newPassword;
+    await user.save();
+
+    // Mark OTP as used
+    otpRecord.isUsed = true;
+    await otpRecord.save();
+
+    // Send password reset confirmation email
+    await sendPasswordResetConfirmationEmail(email, user.name);
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successfully'
+    });
+
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to reset password',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+};
+
 // @desc    Change user role to owner
 // @route   POST /api/auth/become-owner
 // @access  Private
@@ -344,5 +505,8 @@ module.exports = {
   resendOTP,
   login,
   getMe,
-  becomeOwner
+  becomeOwner,
+  forgotPassword,
+  verifyPasswordResetOTP,
+  resetPassword
 }; 
