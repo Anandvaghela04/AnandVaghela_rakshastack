@@ -20,7 +20,7 @@ const Login = ({ darkMode, onLogin }) => {
     }));
   };
 
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/auth';
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-finder.onrender.com/api/auth';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

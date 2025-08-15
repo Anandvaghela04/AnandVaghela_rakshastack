@@ -13,7 +13,7 @@ const Home = ({ darkMode }) => {
   useEffect(() => {
     const fetchFeaturedPGs = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/pg');
+    const res = await fetch('https://easy-pg-finder.onrender.com/api/pg');
     const data = await res.json();
 
     if (res.ok && data.success) {

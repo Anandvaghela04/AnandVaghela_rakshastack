@@ -16,7 +16,7 @@ const OTPVerification = ({
   const [canResend, setCanResend] = useState(false);
   const [error, setError] = useState('');
 
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/auth';
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-finder.onrender.com/api/auth';
 
   useEffect(() => {
     const timer = setInterval(() => {

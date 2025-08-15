@@ -16,7 +16,7 @@ const SearchBar = ({ onSearch, darkMode }) => {
 
   useEffect(() => {
     // Fetch city list from backend
-    fetch('http://localhost:5000/api/pg/cities')
+    fetch('https://easy-pg-finder.onrender.com/api/pg/cities')
       .then(res => res.json())
       .then(data => {
         if (data.success && Array.isArray(data.data.cities)) {

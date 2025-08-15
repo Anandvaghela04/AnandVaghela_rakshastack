@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import './AddPG.css';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-finder.onrender.com/api';
 
 const AddPG = ({ darkMode }) => {
   const navigate = useNavigate();
