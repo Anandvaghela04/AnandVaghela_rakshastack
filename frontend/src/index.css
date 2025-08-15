@@ -7,6 +7,14 @@
 
 html {
   scroll-behavior: smooth;
+  
+  /* Performance optimizations for smooth scrolling */
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-top: 0;
+  
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 body {
@@ -19,6 +27,52 @@ body {
   line-height: 1.6;
   color: #2d3748;
   background-color: #f7fafc;
+  
+  /* Performance optimizations for smooth scrolling */
+  overflow-x: hidden;
+  
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  
+  /* Smooth scrolling on all browsers */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Performance optimizations for all elements */
+* {
+  /* Enable hardware acceleration for smooth animations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize scrolling containers */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling for all sections */
+section {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Performance optimizations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Import Google Fonts */

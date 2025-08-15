@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Star, MapPin, DollarSign, Users } from 'lucide-react';
 import SearchBar from '../components/SearchBar';
 import PGCard from '../components/PGCard';
+import initScrollOptimizations from '../utils/scrollOptimizer';
 import './Home.css';
 
 const Home = ({ darkMode }) => {
@@ -11,6 +12,9 @@ const Home = ({ darkMode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Initialize scroll optimizations for smooth scrolling
+    initScrollOptimizations();
+    
     const fetchFeaturedPGs = async () => {
   try {
     const res = await fetch('http://localhost:5000/api/pg');
