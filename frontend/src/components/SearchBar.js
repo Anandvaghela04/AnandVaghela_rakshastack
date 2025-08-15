@@ -91,7 +91,7 @@ const SearchBar = ({ onSearch, darkMode }) => {
       <form onSubmit={handleSubmit} className="search-form">
         <div className="search-inputs">
           {/* Location */}
-          <div className="search-input-group" style={{ position: 'relative' }}>
+          <div className="search-input-group location-group" style={{ position: 'relative', zIndex: 1001 }}>
             <MapPin size={20} className="input-icon" />
             <input
               type="text"
@@ -106,7 +106,7 @@ const SearchBar = ({ onSearch, darkMode }) => {
             />
             {/* City Suggestions Dropdown */}
             {showSuggestions && citySuggestions.length > 0 && (
-              <ul className="city-suggestions-dropdown">
+              <ul className="city-suggestions-dropdown" style={{ zIndex: 9999 }}>
                 {citySuggestions.slice(0, 8).map(city => (
                   <li
                     key={city}

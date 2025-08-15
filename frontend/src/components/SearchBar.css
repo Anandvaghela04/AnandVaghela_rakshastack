@@ -13,6 +13,10 @@
   /* Ensure no horizontal overflow */
   box-sizing: border-box;
   overflow: visible;
+  
+  /* Ensure proper stacking context */
+  position: relative;
+  z-index: 1;
 }
 
 .search-bar.dark {
@@ -26,6 +30,10 @@
   
   /* Ensure form doesn't cause overflow */
   overflow: visible;
+  
+  /* Ensure proper stacking context */
+  position: relative;
+  z-index: 1;
 }
 
 .search-inputs {
@@ -38,6 +46,10 @@
   /* Ensure grid doesn't cause overflow */
   box-sizing: border-box;
   overflow: visible;
+  
+  /* Ensure proper stacking context */
+  position: relative;
+  z-index: 1;
 }
 
 /* Price range container */
@@ -168,7 +180,7 @@
   border: 2px solid #667eea;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  z-index: 9999;
   max-height: 200px;
   overflow-y: auto;
   margin: 0;
@@ -179,6 +191,10 @@
   /* Ensure dropdown is properly positioned */
   box-sizing: border-box;
   width: 100%;
+  
+  /* Force highest priority */
+  z-index: 9999 !important;
+  position: absolute !important;
 }
 
 .search-bar.dark .city-suggestions-dropdown {
@@ -237,20 +253,26 @@
 }
 
 @media (max-width: 768px) {
+  .search-bar {
+    padding: 1.75rem;
+    margin: 1rem auto;
+    max-width: calc(100vw - 2rem);
+    /* Ensure proper positioning context */
+    position: relative;
+    z-index: 1;
+  }
+
   .search-inputs {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+    /* Ensure grid doesn't interfere with dropdowns */
+    position: relative;
+    z-index: 1;
   }
 
   .search-btn,
   .reset-btn {
     grid-column: span 1;
-  }
-
-  .search-bar {
-    padding: 1.75rem;
-    margin: 1rem auto;
-    max-width: calc(100vw - 2rem);
   }
   
   .search-input {
@@ -271,6 +293,9 @@
   .search-input-group {
     flex-direction: column;
     align-items: stretch;
+    /* Critical: Ensure each input group has proper positioning */
+    position: relative;
+    z-index: 2;
   }
 
   /* Ensure price inputs work properly on mobile */
@@ -292,10 +317,14 @@
     margin-bottom: 0;
     align-self: unset;
     display: block;
+    z-index: 3;
   }
   
   .search-input {
     padding-left: 44px;
+    /* Ensure input doesn't interfere with dropdown */
+    position: relative;
+    z-index: 1;
   }
   
   /* Fix city suggestions dropdown positioning on mobile */
@@ -311,6 +340,8 @@
     /* Ensure dropdown doesn't get cut off */
     max-width: 100%;
     box-sizing: border-box;
+    /* Critical: Ensure dropdown is above everything */
+    z-index: 9999;
   }
   
   /* Ensure dropdown is above other elements */
@@ -318,12 +349,24 @@
     position: relative;
     z-index: 1001;
   }
+  
+  /* Force dropdown to be on top */
+  .city-suggestions-dropdown {
+    z-index: 9999 !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
 }
 
 @media (max-width: 480px) {
   .search-bar {
     padding: 1rem;
     margin: 0.5rem auto;
+    /* Ensure proper stacking context */
+    position: relative;
+    z-index: 1;
   }
 
   .search-btn,
@@ -347,10 +390,21 @@
   .city-suggestions-dropdown {
     font-size: 0.9rem;
     max-height: 150px;
+    /* Force highest z-index */
+    z-index: 9999 !important;
   }
   
   .city-suggestions-dropdown li {
     padding: 10px 12px;
+  }
+  
+  /* Ensure proper stacking for all elements */
+  .search-input-group {
+    z-index: 1001;
+  }
+  
+  .city-suggestions-dropdown {
+    z-index: 9999 !important;
   }
 } 
 
@@ -389,5 +443,36 @@
   .search-input-group {
     position: relative;
     z-index: 1001;
+  }
+} 
+
+/* Force city suggestions dropdown to be on top of everything */
+.city-suggestions-dropdown {
+  z-index: 2147483647 !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Ensure location group has proper stacking context */
+.location-group {
+  position: relative !important;
+  z-index: 2147483646 !important;
+}
+
+/* Mobile-specific force rules */
+@media (max-width: 768px) {
+  .city-suggestions-dropdown {
+    z-index: 2147483647 !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  .location-group {
+    z-index: 2147483646 !important;
+    position: relative !important;
   }
 } 
