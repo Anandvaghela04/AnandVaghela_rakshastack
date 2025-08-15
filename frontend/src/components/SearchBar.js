@@ -71,6 +71,21 @@ const SearchBar = ({ onSearch, darkMode }) => {
     onSearch({});
   };
 
+  // Handle input focus with better mobile support
+  const handleLocationFocus = () => {
+    if (searchData.location.length > 0 && citySuggestions.length > 0) {
+      setShowSuggestions(true);
+    }
+  };
+
+  // Handle input blur with delay for mobile touch
+  const handleLocationBlur = () => {
+    // Use longer delay on mobile for better touch experience
+    const isMobile = window.innerWidth <= 768;
+    const delay = isMobile ? 300 : 150;
+    setTimeout(() => setShowSuggestions(false), delay);
+  };
+
   return (
     <div className={`search-bar ${darkMode ? 'dark' : ''}`}>
       <form onSubmit={handleSubmit} className="search-form">
@@ -86,18 +101,17 @@ const SearchBar = ({ onSearch, darkMode }) => {
               onChange={handleInputChange}
               className="search-input"
               autoComplete="off"
-              onFocus={() => {
-                if (searchData.location.length > 0 && citySuggestions.length > 0) setShowSuggestions(true);
-              }}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+              onFocus={handleLocationFocus}
+              onBlur={handleLocationBlur}
             />
             {/* City Suggestions Dropdown */}
             {showSuggestions && citySuggestions.length > 0 && (
               <ul className="city-suggestions-dropdown">
-                {citySuggestions.map(city => (
+                {citySuggestions.slice(0, 8).map(city => (
                   <li
                     key={city}
                     onMouseDown={() => handleSuggestionClick(city)}
+                    onTouchStart={() => handleSuggestionClick(city)}
                   >
                     {city}
                   </li>

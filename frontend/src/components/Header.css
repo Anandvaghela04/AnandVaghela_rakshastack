@@ -324,7 +324,44 @@
 }
 
 @media (max-width: 480px) {
+  .header-container {
+    padding: 0 0.75rem;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    gap: 0.5rem;
+  }
+  
   .logo span {
-    display: none;
+    font-size: 1.1rem;
+    /* Keep logo text visible on small screens */
+    display: inline;
+  }
+  
+  /* Ensure logo icon is properly sized on small screens */
+  .logo svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-container {
+    padding: 0 0.5rem;
+  }
+  
+  .logo {
+    font-size: 1.3rem;
+    gap: 0.4rem;
+  }
+  
+  .logo span {
+    font-size: 1rem;
+  }
+  
+  .logo svg {
+    width: 24px;
+    height: 24px;
   }
 } 
