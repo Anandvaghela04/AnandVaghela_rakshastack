@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import './OwnerDashboard.css';
 
-const API_BASE_URL = 'https://easy-pg-finder.onrender.com/api';
+const API_BASE_URL = 'https://easy-pg-server.onrender.com/api';
 
 const OwnerDashboard = ({ darkMode, user, logout }) => {
   const [pgListings, setPgListings] = useState([]);

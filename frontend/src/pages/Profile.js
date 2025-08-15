@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import './Profile.css';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-finder.onrender.com/api/auth';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-server.onrender.com/api/auth';
 const Profile = ({ darkMode, user, logout, onBecomeOwner }) => {
   const navigate = useNavigate();
   const [updating, setUpdating] = React.useState(false);
@@ -32,7 +32,7 @@ const Profile = ({ darkMode, user, logout, onBecomeOwner }) => {
     setError(null);
     try {
       const token = localStorage.getItem('token');
-      const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-finder.onrender.com/api/auth';
+      const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-server.onrender.com/api/auth';
       const res = await fetch(`${API_BASE_URL}/become-owner`, {
         method: 'POST',
         headers: {

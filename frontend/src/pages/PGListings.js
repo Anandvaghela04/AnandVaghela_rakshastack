@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar';
 import PGCard from '../components/PGCard';
 import './PGListings.css';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-finder.onrender.com/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-server.onrender.com/api';
 
 const PGListings = ({ darkMode }) => {
   const [searchParams, setSearchParams] = useSearchParams();

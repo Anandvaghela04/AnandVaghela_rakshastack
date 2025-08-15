@@ -27,7 +27,7 @@ const Register = ({ darkMode }) => {
     }));
   };
 
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-finder.onrender.com/api/auth';
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://easy-pg-server.onrender.com/api/auth';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
