@@ -1,0 +1,309 @@
+.pg-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+
+.pg-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  min-height: 450px;
+}
+
+.pg-card.dark {
+  background: #2d3748;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pg-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.pg-card.dark:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Image Container */
+.pg-card-image {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+}
+
+.pg-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pg-card:hover .pg-card-image img {
+  transform: scale(1.08);
+}
+
+.pg-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, transparent 50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.save-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #e53e3e;
+}
+
+.save-btn:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.save-btn.saved {
+  background: #e53e3e;
+  color: white;
+}
+
+.unavailable-badge {
+  background: rgba(229, 62, 62, 0.9);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.rating-badge {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #f6ad55;
+  padding: 0.25rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Content */
+.pg-card-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pg-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: #2d3748;
+  line-height: 1.3;
+}
+
+.pg-card.dark .pg-card-title {
+  color: white;
+}
+
+.pg-card-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.pg-card.dark .pg-card-location {
+  color: #a0aec0;
+}
+
+.pg-card-price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.pg-card.dark .pg-card-price {
+  color: white;
+}
+
+.price-amount {
+  font-size: 1.1rem;
+  color: #667eea;
+}
+
+.price-period {
+  font-size: 0.9rem;
+  color: #718096;
+  font-weight: 400;
+}
+
+.pg-card.dark .price-period {
+  color: #a0aec0;
+}
+
+.pg-card-gender {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gender-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  /* Provide a safe default so it stays readable in both themes */
+  background: rgba(102, 126, 234, 0.12);
+  color: #2d3748;
+  border: 1px solid rgba(102, 126, 234, 0.25);
+}
+
+.pg-card.dark .gender-badge {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Support both data variants: boys/girls/unisex and male/female/unisex */
+.gender-badge.male,
+.gender-badge.boys {
+  background: #bee3f8;
+  color: #2b6cb0;
+}
+
+.pg-card.dark .gender-badge.male,
+.pg-card.dark .gender-badge.boys {
+  background: rgba(66, 153, 225, 0.22);
+  color: #ebf8ff;
+  border-color: rgba(66, 153, 225, 0.35);
+}
+
+.gender-badge.female,
+.gender-badge.girls {
+  background: #fed7d7;
+  color: #c53030;
+}
+
+.pg-card.dark .gender-badge.female,
+.pg-card.dark .gender-badge.girls {
+  background: rgba(245, 101, 101, 0.22);
+  color: #fff5f5;
+  border-color: rgba(245, 101, 101, 0.35);
+}
+
+.gender-badge.unisex {
+  background: #c6f6d5;
+  color: #2f855a;
+}
+
+.pg-card.dark .gender-badge.unisex {
+  background: rgba(72, 187, 120, 0.22);
+  color: #f0fff4;
+  border-color: rgba(72, 187, 120, 0.35);
+}
+
+/* Amenities */
+.pg-card-amenities {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #667eea;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.amenity-more {
+  color: #718096;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.pg-card.dark .amenity-more {
+  color: #a0aec0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .pg-card {
+    min-height: 400px;
+  }
+
+  .pg-card-image {
+    height: 180px;
+  }
+
+  .pg-card-content {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .pg-card-title {
+    font-size: 1.1rem;
+  }
+
+  .pg-card-amenities {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pg-card-image {
+    height: 160px;
+  }
+
+  .pg-card-overlay {
+    padding: 0.75rem;
+  }
+
+  .save-btn {
+    width: 35px;
+    height: 35px;
+  }
+
+  .rating-badge {
+    bottom: 0.75rem;
+    right: 0.75rem;
+    font-size: 0.7rem;
+  }
+} 
