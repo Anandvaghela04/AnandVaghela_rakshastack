@@ -7,6 +7,7 @@ import PGListings from './pages/PGListings';
 import PGDetails from './pages/PGDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import OwnerDashboard from './pages/OwnerDashboard';
 import Profile from './pages/Profile';
 import AddPG from './pages/AddPG';
@@ -98,6 +99,7 @@ function App() {
             <Route path="/pg/:id" element={<PGDetails darkMode={darkMode} />} />
             <Route path="/login" element={<Login darkMode={darkMode} onLogin={login} />} />
             <Route path="/register" element={<Register darkMode={darkMode} />} />
+            <Route path="/forgot-password" element={<ForgotPassword darkMode={darkMode} />} />
             <Route path="/owner-dashboard" element={<OwnerDashboard darkMode={darkMode} user={user}  />} />
             <Route path="/profile" element={<Profile darkMode={darkMode} user={user} logout={logout} refreshUser={refreshUser} />} />
             <Route path="/add-pg" element={<AddPG darkMode={darkMode} />} />
