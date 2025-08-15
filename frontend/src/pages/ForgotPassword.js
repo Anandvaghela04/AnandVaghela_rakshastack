@@ -143,7 +143,7 @@ const ForgotPassword = ({ darkMode }) => {
     setMessage({ type: '', text: '' });
 
     try {
-      const res = await fetch(`${API_BASE_URL}/verify-otp`, {
+      const res = await fetch(`${API_BASE_URL}/verify-password-reset-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
