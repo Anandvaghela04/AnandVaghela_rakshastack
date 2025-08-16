@@ -9,6 +9,10 @@
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
+  
+  /* Ensure no horizontal overflow */
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 .search-bar.dark {
@@ -19,6 +23,9 @@
 .search-form {
   width: 100%;
   max-width: none;
+  
+  /* Ensure form doesn't cause overflow */
+  overflow: visible;
 }
 
 .search-inputs {
@@ -27,6 +34,10 @@
   gap: 1.5rem;
   align-items: end;
   width: 100%;
+  
+  /* Ensure grid doesn't cause overflow */
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 /* Price range container */
@@ -164,6 +175,10 @@
   padding: 0;
   list-style: none;
   margin-top: 4px;
+  
+  /* Ensure dropdown is properly positioned */
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .search-bar.dark .city-suggestions-dropdown {
@@ -177,6 +192,11 @@
   border-bottom: 1px solid #e2e8f0;
   transition: all 0.2s ease;
   color: #2d3748;
+  
+  /* Ensure text is readable */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search-bar.dark .city-suggestions-dropdown li {
@@ -263,27 +283,111 @@
     min-width: 100%;
   }
 
-  /* --- FIX ICON ALIGNMENT ON MOBILE --- */
+  /* Fix icon alignment on mobile */
   .input-icon {
-    position: static;
-    margin-bottom: 0.25rem;
-    left: unset;
-    align-self: center;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-bottom: 0;
+    align-self: unset;
     display: block;
   }
+  
   .search-input {
-    padding-left: 12px;
+    padding-left: 44px;
+  }
+  
+  /* Fix city suggestions dropdown positioning on mobile */
+  .city-suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 4px;
+    /* Ensure dropdown doesn't get cut off */
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure dropdown is above other elements */
+  .search-input-group {
+    position: relative;
+    z-index: 1001;
   }
 }
 
 @media (max-width: 480px) {
   .search-bar {
     padding: 1rem;
+    margin: 0.5rem auto;
   }
 
   .search-btn,
   .reset-btn {
     padding: 10px 16px;
     font-size: 0.9rem;
+  }
+  
+  /* Further optimize for very small screens */
+  .search-input {
+    padding: 10px 12px 10px 36px;
+    font-size: 0.9rem;
+  }
+  
+  .input-icon {
+    left: 12px;
+    font-size: 1rem;
+  }
+  
+  /* Ensure city suggestions are readable on small screens */
+  .city-suggestions-dropdown {
+    font-size: 0.9rem;
+    max-height: 150px;
+  }
+  
+  .city-suggestions-dropdown li {
+    padding: 10px 12px;
+  }
+} 
+
+/* Mobile-specific dropdown improvements */
+@media (max-width: 768px) {
+  .city-suggestions-dropdown {
+    /* Ensure dropdown is above other elements on mobile */
+    z-index: 1001;
+    
+    /* Better mobile positioning */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    
+    /* Mobile-friendly sizing */
+    max-height: 180px;
+    font-size: 0.95rem;
+    
+    /* Ensure no horizontal overflow */
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .city-suggestions-dropdown li {
+    /* Mobile-friendly padding */
+    padding: 14px 16px;
+    
+    /* Ensure touch-friendly size */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Ensure the input group has proper positioning context */
+  .search-input-group {
+    position: relative;
+    z-index: 1001;
   }
 } 
